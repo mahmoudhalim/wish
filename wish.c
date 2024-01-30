@@ -43,7 +43,7 @@ int get_path(char* myargv[]){
   int i = 0;
   while (1)
   {
-    if (PATH[i] = NULL)
+    if (PATH[i] == NULL)
       break;
     else {
       strcpy(temp_path, PATH[i]);
@@ -86,32 +86,32 @@ int main(int argc, char *argv[]){
       {
         PATH[i] = myargv[i + 1];
       }
+      continue;
     }
 
     // handle cd
 
     if (strcmp(myargv[0], "cd") == 0)
     {
-      if (myargc > 2)
+      if (myargc != 2)
       {
         fprintf(stderr, "An error has occurred\n");
         continue;
       }
-      int ret = chdir("$HOME/");
+      int ret = chdir(myargv[1]);
       if (ret == -1)
       {
         fprintf(stderr, "An error has occurred\n");
         continue;
       }
-      
-    }
+                    }
 
     if (get_path(myargv) == -1){
       fprintf(stderr, "An error has occurred\n");
       continue;
     }
 
-    int rc = fork();
+      int rc = fork();
     if (rc == 0) { // child process
       rc = execv(myargv[0], myargv);
       printf("%s ",myargv[0]);
